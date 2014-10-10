@@ -11,6 +11,15 @@ var server = net.createServer(function(connection) {
         console.log('connection closed');
     }
   });
+  //Manejo error event
+  connection.on('error',function(){
+    console.error('Connection closed with error: %s', error);
+  });
+  //Manejo close event
+  connection.on('error',function(){
+    console.log('Connection closed!');
+  });
+
 });
 server.listen(port);
 console.log("Socket server listening on port %s", port);
