@@ -4,7 +4,6 @@ var testing = require('testing');
 //var port = 1702;
 function start(port, callback) {
   var server = net.createServer(function(connection) {
-      console.log('Connection open');
       connection.write('Hello?\r\n');
       connection.on('data', function(data) {
         if (String(data).trim().toLowerCase() != 'hello') {
@@ -24,7 +23,6 @@ function start(port, callback) {
     });
   });
   server.listen(port, callback);
-  console.log("Socket server listening on port %s", port);
   return server;
 };
 
@@ -32,11 +30,9 @@ function testServer(callback) {
     var port = 1705;
     var server = start(port, function(error) {
         testing.check(error, 'Could not start server', callback);
-        console.log('started');
         var socket = net.connect(port, 'localhost', function(error) {
             testing.check(error, 'Could not connect', callback);
             socket.on('data', function(data) {
-                console.log('Received ' + data);
                 var message = String(data).trim();
                 if (message == 'Hello?')
                 {
